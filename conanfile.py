@@ -20,9 +20,9 @@ class libavtpConan(ConanFile):
     }
 
     def system_requirements(self):
-        if os_info.is_linux:
-            if os_info.with_apt:
-                installer = SystemPackageTool()
+        if tools.os_info.is_linux:
+            if tools.os_info.with_apt:
+                installer = tools.SystemPackageTool()
                 installer.install("ninja-build")
                 installer.install("meson")
                 installer.install("libcmocka-dev")
