@@ -4,7 +4,7 @@ from conans import tools
 
 class libavtpConan(ConanFile):
     name = "libavtp"
-    version = "0.1"
+    version = "0.2.0"
     source_directory = "%s-%s" % (name, version)
     description = "The libavtp library"
     generators = "cmake", "txt"
@@ -16,18 +16,12 @@ class libavtpConan(ConanFile):
         "type": "git",
         "subfolder": "sources",
         "url": "https://github.com/AVnu/libavtp.git",
-        "revision": "master",
+        "revision": "v{0}".format(version),
     }
 
-    def system_requirements(self):
-        if tools.os_info.is_linux:
-            if tools.os_info.with_apt:
-                installer = tools.SystemPackageTool()
-                installer.install("ninja-build")
-                installer.install("meson")
-                installer.install("libcmocka-dev")
-            else:
-                self.output.warn("Could not determine Linux package manager, skipping system requirements installation.")
+    def build_requirements(self):
+        self.build_requires("meson/0.54.2")
+        self.build_requires("cmocka/1.1.5")
 
     def configure(self):
         del self.settings.compiler.libcxx
